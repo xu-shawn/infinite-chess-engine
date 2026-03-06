@@ -3438,6 +3438,10 @@ fn negamax(ctx: &mut NegamaxContext) -> i32 {
         }
     }
 
+    if in_check && ply > 0 && prior_reduction >= 1 {
+        depth += 1;
+    }
+
     // TT Cutoff
     if !is_pv
         && excluded_move.is_none()

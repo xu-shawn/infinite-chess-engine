@@ -23,7 +23,7 @@ const MG_ISOLATED_PENALTY: i32 = 10;
 const EG_ISOLATED_PENALTY: i32 = 15;
 const MG_DOUBLED_PENALTY: i32 = 10;
 const EG_DOUBLED_PENALTY: i32 = 10;
-const MG_PASSED_PAWN_BONUS: [i32; 8] = [0, 0,  0, 10, 20, 40,  80, 120];
+const MG_PASSED_PAWN_BONUS: [i32; 8] = [0, 2,  5, 10, 20, 40,  80, 120];
 const EG_PASSED_PAWN_BONUS: [i32; 8] = [0, 5, 10, 20, 40, 70, 120, 200];
 
 const PHASE_INC: [i32; 6] = [0, 1, 1, 2, 4, 0];

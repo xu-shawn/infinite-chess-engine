@@ -23,7 +23,8 @@ const MG_ISOLATED_PENALTY: i32 = 10;
 const EG_ISOLATED_PENALTY: i32 = 15;
 const MG_DOUBLED_PENALTY: i32 = 10;
 const EG_DOUBLED_PENALTY: i32 = 10;
-const PASSED_PAWN_BONUS: [i32; 8] = [0, 5, 10, 20, 40, 70, 120, 200];
+const MG_PASSED_PAWN_BONUS: [i32; 8] = [0, 0,  0, 10, 20, 60, 120, 250];
+const EG_PASSED_PAWN_BONUS: [i32; 8] = [0, 0, 10, 20, 40, 70, 200, 350];
 
 const PHASE_INC: [i32; 6] = [0, 1, 1, 2, 4, 0];
 const MAX_PHASE: i32 = 24;
@@ -332,9 +333,10 @@ pub fn evaluate(game: &GameState) -> i32 {
 
         if is_passed {
             let rank = if is_white { y } else { 9 - y };
-            let bonus = PASSED_PAWN_BONUS[(rank - 1).clamp(0, 7) as usize];
-            mg[color_idx] += bonus / 2;
-            eg[color_idx] += bonus;
+            let mg_bonus = MG_PASSED_PAWN_BONUS[(rank - 1).clamp(0, 7) as usize];
+            let eg_bonus = EG_PASSED_PAWN_BONUS[(rank - 1).clamp(0, 7) as usize];
+            mg[color_idx] += mg_bonus;
+            eg[color_idx] += eg_bonus;
         }
     }
 

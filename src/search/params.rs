@@ -53,8 +53,8 @@ pub const DEFAULT_FUTILITY_MARGIN: [i32; 4] = [0, 95, 190, 285];
 
 // Reverse Futility Pruning
 pub const DEFAULT_RFP_MAX_DEPTH: usize = 14;
-pub const DEFAULT_RFP_MULT_TT: i32 = 76;
-pub const DEFAULT_RFP_MULT_NO_TT: i32 = 53;
+pub const DEFAULT_RFP_MULT_TT: i32 = 46;
+pub const DEFAULT_RFP_MULT_NO_TT: i32 = 23;
 pub const DEFAULT_RFP_IMPROVING_MULT: i32 = 2474;
 pub const DEFAULT_RFP_WORSENING_MULT: i32 = 331;
 

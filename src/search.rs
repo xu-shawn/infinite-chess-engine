@@ -4046,6 +4046,10 @@ fn negamax(ctx: &mut NegamaxContext) -> i32 {
             }
         }
 
+        if extension <= 0 && game.is_in_check() {
+            extension = 1
+        }
+
         let score;
         if legal_moves == 1 {
             // Child type depends on current node type:

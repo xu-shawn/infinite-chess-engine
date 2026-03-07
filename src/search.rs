@@ -4079,7 +4079,6 @@ fn negamax(ctx: &mut NegamaxContext) -> i32 {
             let mut reduction: i32 = 0;
             if depth >= lmr_min_depth()
                 && legal_moves >= lmr_min_moves()
-                && !in_check
                 && !is_capture
                 && !(gives_check && (p_type == PieceType::Queen || p_type == PieceType::Amazon))
             {
@@ -4117,6 +4116,10 @@ fn negamax(ctx: &mut NegamaxContext) -> i32 {
                 // If TT moves have been unreliable (low tt_move_history), reduce less
                 // since the move ordering from TT may not be trustworthy.
                 if searcher.tt_move_history < lmr_tt_history_thresh() && reduction > 0 {
+                    reduction -= 1;
+                }
+
+                if in_check {
                     reduction -= 1;
                 }
 

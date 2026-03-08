@@ -1699,6 +1699,7 @@ pub fn evaluate_king_safety_traced<T: EvaluationTracer>(
     b_king_rays: &[(i32, i32, PlayerColor, PieceType); 8],
     w_ring_covered: bool,
     b_ring_covered: bool,
+
 ) -> i32 {
     let mut w_safety: i32 = 0;
     let mut b_safety: i32 = 0;
@@ -1714,6 +1715,7 @@ pub fn evaluate_king_safety_traced<T: EvaluationTracer>(
             phase,
             metrics.urgency.0,
             metrics.has_enemy_queen.0,
+            metrics.white_slider_counts.1,
             white_pawns,
             w_king_rays,
             w_ring_covered,
@@ -1727,6 +1729,7 @@ pub fn evaluate_king_safety_traced<T: EvaluationTracer>(
             phase,
             metrics.urgency.1,
             metrics.has_enemy_queen.1,
+            metrics.black_slider_counts.1,
             black_pawns,
             b_king_rays,
             b_ring_covered,
@@ -2169,6 +2172,7 @@ fn evaluate_king_shelter(
     phase: i32,
     defense_urgency: i32,
     has_enemy_queen_possible: bool,
+    orthogonal_attackers_count: i32,
     pawns: &[(i64, i64)], // Pre-sorted by (x, y)
     king_rays: &[(i32, i32, PlayerColor, PieceType); 8],
     has_ring_cover: bool,
@@ -2212,7 +2216,7 @@ fn evaluate_king_shelter(
         }
 
         // King on Open File Penalty (No friendly pawns on file)
-        if dx == 0 && on_file_count == 0 {
+        if dx == 0 && on_file_count == 0 && orthogonal_attackers_count > 0 {
             safety -= taper(MG_KING_OPEN_FILE_PENALTY, EG_KING_OPEN_FILE_PENALTY);
         }
     }

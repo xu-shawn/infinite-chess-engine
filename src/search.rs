@@ -3787,7 +3787,7 @@ fn negamax(ctx: &mut NegamaxContext) -> i32 {
         let gives_check = StagedMoveGen::move_gives_check_fast(game, &m);
 
         // In-move pruning at shallow depths (not in PV, have material, not losing)
-        if !is_pv && game.has_non_pawn_material(game.turn) && !is_loss(best_score) {
+        if !is_pv && !gives_check && game.has_non_pawn_material(game.turn) && !is_loss(best_score) {
             // Late move pruning: skip quiet moves after seeing enough
             let improving_div = if improving { 1 } else { 2 };
             let lmp_count = (lmp_base() + depth * depth * lmp_depth_mult()) / improving_div;

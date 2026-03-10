@@ -4128,38 +4128,6 @@ fn negamax(ctx: &mut NegamaxContext) -> i32 {
             // Base child depth after LMR (with singular extension if applicable)
             let mut new_depth = (depth as i32) - 1 + extension - reduction;
 
-            // History Leaf Pruning
-            if !in_check
-                && !is_pv
-                && !is_capture
-                && !is_promotion
-                && !gives_check
-                && depth <= hlp_max_depth()
-                && legal_moves >= hlp_min_moves()
-                && !is_loss(best_score)
-            {
-                let idx = hash_move_dest(&m);
-                let ph_idx = (game.pawn_hash & PAWN_HISTORY_MASK) as usize;
-                let value = searcher.history[p_type as usize][idx]
-                    + searcher.pawn_history[ph_idx][p_type as usize][idx];
-
-                if value < hlp_history_reduce() {
-                    // Extra reduction based on poor history
-                    new_depth -= 1;
-
-                    // If depth after reductions would drop to quiescence or below
-                    // and history is really bad, prune this move entirely.
-                    if new_depth <= 0 && value < hlp_history_leaf() {
-                        game.undo_move(&m, undo);
-                        // Restore searcher state before continuing
-                        searcher.prev_move_stack[ply] = prev_entry_backup;
-                        searcher.move_history[ply] = move_history_backup;
-                        searcher.moved_piece_history[ply] = piece_history_backup;
-                        continue;
-                    }
-                }
-            }
-
             // Allow new_depth to reach 0 so that the child call will
             // transition to quiescence (depth == 0) instead of being
             // artificially clamped to 1, which can cause very deep

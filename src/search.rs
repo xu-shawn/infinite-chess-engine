@@ -3800,37 +3800,7 @@ fn negamax(ctx: &mut NegamaxContext) -> i32 {
             // LMR depth estimate for pruning decisions
             let lmr_depth = new_depth as i32;
 
-            if is_capture || gives_check {
-                // Capture/check pruning
-                if let Some(cap_type) = captured_type {
-                    let capt_hist = searcher.capture_history[p_type as usize][cap_type as usize];
-
-                    // Capture futility: skip captures that can't raise alpha
-                    if !gives_check && lmr_depth < 7 {
-                        let cap_value = get_piece_value(cap_type);
-                        let futility_value = static_eval
-                            + 232
-                            + 217 * lmr_depth
-                            + cap_value
-                            + 131 * capt_hist / 1024;
-                        if futility_value <= alpha {
-                            continue;
-                        }
-                    }
-
-                    // SEE pruning for captures: skip losing captures
-                    // Exempt moves that give check (they have tactical significance)
-                    if !gives_check {
-                        let see_margin = (see_capture_linear() * depth as i32
-                            + capt_hist / see_capture_hist_div())
-                        .max(0);
-                        let see_value = static_exchange_eval(game, &m);
-                        if see_value < -see_margin {
-                            continue;
-                        }
-                    }
-                }
-            } else {
+            if !(is_capture || gives_check) {
                 // Quiet move pruning
                 let hist_idx = hash_move_dest(&m);
                 let main_hist = searcher.history[p_type as usize][hist_idx];

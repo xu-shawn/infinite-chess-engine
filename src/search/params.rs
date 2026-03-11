@@ -70,7 +70,7 @@ pub const DEFAULT_LOW_DEPTH_PROBCUT_MARGIN: i32 = 800;
 pub const DEFAULT_IIR_MIN_DEPTH: usize = 6; // Adjusted to match search.rs:2326
 
 // SEE Pruning
-pub const DEFAULT_SEE_CAPTURE_LINEAR: i32 = 166;
+pub const DEFAULT_SEE_CAPTURE_LINEAR: i32 = 106;
 pub const DEFAULT_SEE_CAPTURE_HIST_DIV: i32 = 29;
 pub const DEFAULT_SEE_QUIET_QUAD: i32 = 25;
 pub const DEFAULT_SEE_WINNING_THRESHOLD: i32 = 0;
